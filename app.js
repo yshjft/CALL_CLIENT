@@ -6,6 +6,9 @@ const path = require('path')
 const flash =  require('connect-flash')
 require('dotenv').config()
 
+const pageRouter = require('./routes/page')
+const authRouter = require('./routes/auth')
+
 const app = express()
 
 app.set('views', path.join(__dirname, 'views'))
@@ -27,6 +30,9 @@ app.use(session({
     }
 }))
 app.use(flash()) // 사용하려나??
+
+app.use('/', pageRouter)
+app.use('/auth', authRouter)
 
 app.use((req, res, next)=>{
     const err = new Error('Not Found')
