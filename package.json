@@ -9,6 +9,7 @@
   "author": "hys",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
