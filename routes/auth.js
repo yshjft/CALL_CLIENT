@@ -4,13 +4,15 @@ const router = express.Router()
 
 router.post('/join', async (req, res, next)=>{
     const {email, nick, password} = req.body
-    console.log(email, nick, password)
-
     const response = await axios.post('http://localhost:8002/api/auth/join', {
         email, nick, password
     })
-    console.log(response.data.message)
-    res.redirect('/join')
+    if(response.status === 201){
+        res.redirect('/')
+    }else{
+        res.redirect('/join')
+    }
+    
 })
 
 router.post('/login', (req, res, next)=>{
