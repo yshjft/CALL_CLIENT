@@ -34,6 +34,7 @@ router.get('/afterLogin', async(req, res, next)=>{
             }
         }catch(error){
             if(error.response.status === 419){
+                console.log('response = ', error.response.data)
                 req.session.destroy()
                 return res.redirect('/')
             }
