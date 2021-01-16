@@ -16,21 +16,27 @@ router.get('/join', (req, res, next)=>{
 })
 
 router.get('/afterLogin', async(req, res, next)=>{
-
     if(!req.session.jwt){
         return res.redirect('/')
     }else{
-        const response = await axios.get('http://localhost:8002/api/user/myData', {
-            headers: {authorization: req.session.jwt}
-        })
-
-        if(response.status === 200){
-            const {nick, email} = response.data
-            return res.render('afterLogin', {
-                title: TITLE,
-                nick,
-                eamil
+        try{
+            const response = await axios.get('http://localhost:8002/api/user/myData', {
+                headers: {authorization: req.session.jwt}
             })
+
+            if(response.status === 200){
+                const {nick, email} = response.data
+                return res.render('afterLogin', {
+                    title: TITLE,
+                    nick,
+                    email
+                })
+            }
+        }catch(error){
+            if(error.response.status === 419){
+                req.session.destroy()
+                return res.redirect('/')
+            }
         }
     }  
 })
